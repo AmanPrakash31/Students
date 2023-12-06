@@ -1,0 +1,219 @@
+<!-- <p>students-dlist works!</p> -->
+<div class="card flex justify-content-between">
+  <p-button
+    class="mb-4"
+    severity="success"
+    [raised]="true"
+    icon="pi pi-plus-circle "
+    (click)="showAddModal()"
+    label="Add Student"
+  ></p-button>
+
+  <form>
+    <label for="fileUpload">Import from Excel</label>
+    <input
+      type="file"
+      class="inputfile"
+      title="Choose Excel for upload"
+      (change)="readExcelFile($event)"
+    />
+  </form>
+
+  <!-- <p-fileUpload mode="basic" chooseLabel="Choose" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept=".xlsx"  (onUpload)="readExcelFile($event)" [auto]="false" chooseLabel="Import"></p-fileUpload> -->
+
+  <!-- <app-report>
+[hero]="rData"
+
+</app-report> -->
+
+  <p-button
+    (click)="showReportDialog()"
+    icon="pi pi-external-link"
+    label="Report"
+    [raised]="true"
+    severity="warning"
+  ></p-button>
+</div>
+<div class="card">
+  <p-table
+    [value]="data"
+    [paginator]="true"
+    [rows]="8"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="p-datatable-striped"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Roll No</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Class</th>
+        <th>DOB</th>
+        <th>Pincode</th>
+        <th>Maths</th>
+        <th>Science</th>
+        <th>English</th>
+        <th>Geography</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-student>
+      <tr>
+        <td>{{ student.RollNo }}</td>
+        <td>{{ student.Name }}</td>
+        <td>{{ student.Gender }}</td>
+        <td>{{ student.Class }}</td>
+        <td>{{ student.DOB }}</td>
+        <td>{{ student.Pincode }}</td>
+
+        <td [ngClass]="getColorClass(student.Maths)">{{ student.Maths }}</td>
+        <td [ngClass]="getColorClass(student.Science)">
+          {{ student.Science }}
+        </td>
+        <td [ngClass]="getColorClass(student.English)">
+          {{ student.English }}
+        </td>
+        <td [ngClass]="getColorClass(student.Geography)">
+          {{ student.Geography }}
+        </td>
+        <td>
+          <button
+            pButton
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-help mr-2"
+            (click)="showEditModal(student)"
+          ></button>
+
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger"
+            (click)="deleteStud(student)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<div class="card flex flex-wrap gap-3 justify-content-center mt-4 mb-4">
+  <p-button
+    (click)="showClassReport();"
+    icon="pi pi-star-fill"
+    label="Class Report"
+    [raised]="true"
+    severity="help"
+  ></p-button>
+</div>
+<app-add-edit
+  [displayAddEditModal]="displayAddEditModal"
+  [selectedStudent]="selectedStudent"
+  (clickClose)="hideAddModel($event)"
+  (clickAddEdit)="saveStudentToList($event)"
+></app-add-edit>
+
+<p-toast position="top-right"></p-toast>
+<p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+
+<p-dialog
+  header="Report Card"
+  [modal]="true"
+  [(visible)]="visible"
+  [maximizable]="true"
+>
+  <p-table #dt [value]="data" [tableStyle]="{ 'min-width': '40rem' }">
+    <ng-template pTemplate="header"> </ng-template>
+
+    <ng-template pTemplate="header">
+      <!-- <tr>
+        <th>
+          <input pInputText  (input)="dt.filterGlobal($event.target.Class, 'contains')" placeholder="Enter Class" />
+        </th>
+      </tr>
+       -->
+      <tr>
+        <th>Roll No</th>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Percentage</th>
+        <th>Result</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-d>
+      <tr>
+        <td>{{ d.RollNo }}</td>
+        <td>{{ d.Name }}</td>
+        <td>{{ d.Class }}</td>
+        <td>
+          {{
+            calculatePercentage(d.Maths + d.English + d.Science + d.Geography)
+          }}
+          %
+        </td>
+        <ng-container
+          *ngIf="
+            calculatePercentage(
+              d.Maths + d.English + d.Science + d.Geography
+            ) >= 33 &&
+              d.Maths >= 35 &&
+              d.Geography >= 35 &&
+              d.English >= 35 &&
+              d.Science >= 35;
+            else fail
+          "
+        >
+          <td class="G1">😎 Pass</td>
+        </ng-container>
+        <ng-template #fail>
+          <td class="R1">😭 Fail</td>
+        </ng-template>
+      </tr>
+    </ng-template>
+  </p-table>
+  <div class="card flex flex-wrap gap-3 justify-content-center mt-4 mb-4">
+    <p-button 
+      (click)="showClassReport()"
+      icon="pi pi-star-fill"
+      label="Class Report"
+      [raised]="true"
+      severity="help"
+    ></p-button>
+  </div>
+</p-dialog>
+
+<p-dialog
+  header="Class Report"
+  [modal]="true"
+  [(visible)]="ClassReportVisible"
+  [style]="{ width: '500px', height: '580px' }"
+>
+  <div>
+    <p class="R2">Choose a class for Summary</p>
+    <p-dropdown
+      id="classSelect"
+      [(ngModel)]="selectedClass"
+      [options]="classOptions"
+      [showClear]="true"
+      placeholder="Select a Class"
+    ></p-dropdown>
+  </div>
+
+  <div *ngIf="selectedClass !== null" class="text1">
+    <hr style="border-top: 4px solid rgb(184, 184, 184); border-radius: 8px" />
+
+    <div>Average score for Class {{ selectedClass }}: 📊</div>
+    <div class="G2">{{ calculateAverage() }}</div>
+    <hr style="border-top: 4px solid rgb(184, 184, 184); border-radius: 8px" />
+    <div>Topper for Class {{ selectedClass }}: 🏆</div>
+    <div class="G2">{{ findClassTopper()?.Name }}</div>
+    <hr style="border-top: 4px solid rgb(184, 184, 184); border-radius: 8px" />
+    <div>Number of students in Class {{ selectedClass }} who Passed: 😎</div>
+    <div class="G2">{{ countStudentsAbove35() }}</div>
+    <hr style="border-top: 4px solid rgb(184, 184, 184); border-radius: 8px" />
+    <div>Number of students in Class {{ selectedClass }} who Failed: 😭</div>
+    <div class="G3">{{ countStudentsBelow35() }}</div>
+    <hr style="border-top: 4px solid rgb(184, 184, 184); border-radius: 8px" />
+  </div>
+</p-dialog>
+

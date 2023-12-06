@@ -1,0 +1,98 @@
+.inputfile {
+  padding-top: 1%;
+  font-size: 1.2rem;
+  font-weight: 100;
+  color: aliceblue;
+  cursor: pointer;
+
+
+}
+.G {
+  color: green;
+  font-weight: 700;
+}
+.R {
+  color: red;
+  font-weight: 700;
+}
+
+.G1 {
+  color: green;
+  font-weight: 700;
+  font-size: larger;
+}
+.R1 {
+  color: red;
+  font-weight: 700;
+  font-size: larger;
+}
+
+input[type="file"]::file-selector-button {
+  border: 2px solid #6c5ce7;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  background-color: #00bebb;
+  transition: 0.2s;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #81ecaa;
+  border: 2px solid #00cec9;
+}
+label {
+  color: aliceblue;
+  margin-right: 15px;
+  font-weight: 500;
+  font-size: large;
+}
+.G2 {
+  color: green;
+  font-weight: 700;
+  font-size: larger;
+  padding: 10px 30px ;
+  
+}
+.R2 {
+  color: rgb(80, 0, 141);
+  font-weight: 600;
+  font-size: large;
+}
+.G3 {
+  color: rgb(255, 0, 0);
+  font-weight: 700;
+  font-size: larger;
+  padding: 10px 30px ;
+  
+}
+.text1{
+  
+  font-weight: 700;
+ 
+ 
+  
+}
+
+
+
+buttonx {
+  border: none;
+  padding: 0.5rem;
+  background: #fddde3;
+  color: #8e5d5d;
+  width: 200px;
+  height: 50px;
+  font-size: 21px;
+  box-shadow: 0px 1px 4px 0px #d59d9d;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+ 
+canvas {
+  height: 100%; /* we need these for full-screen effect */
+  width: 100%;
+}
+ 
+.container {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,241 @@
+<p-dialog
+  header="{{ modalType }}"
+  [(visible)]="displayAddEditModal"
+  [style]="{ width: '30vw' }"
+  (onHide)="closeModal()"
+>
+  <form [formGroup]="addForm" class="form">
+    <div class="field">
+      <label class="block" for="RollNo">RollNo</label>
+      <p-inputNumber
+        inputId="integeronly"
+        [(ngModel)]="RollNo"
+        id="RollNo"
+        formControlName="RollNo"
+        class="block"
+        [disabled]="isInputReadOnly()"
+      ></p-inputNumber>
+      <small
+        class="p-error block"
+        *ngIf="
+          addForm.controls['RollNo'].invalid && addForm.controls['RollNo'].dirty
+        "
+        >RollNo is required</small
+      >
+    </div>
+
+
+
+    
+    
+    <!-- alphanumericPattern : /^[a-zA-Z0-9 ]+$/, -->
+    <div class="field">
+      <label class="block" for="Name">Name</label>
+      <input
+        type="text"
+        pKeyFilter="^[a-zA-Z]+$"
+        pInputText
+        id="Name"
+        formControlName="Name"
+      />
+      <small
+        class="p-error block"
+        *ngIf="
+          addForm.controls['Name'].invalid && addForm.controls['Name'].dirty
+        "
+        >Name is required</small
+      >
+    </div>
+    <div class="field">
+      <label class="block" for="Gender">Gender</label>
+      <p-dropdown
+        [options]="gen"
+        for="Gender"
+        id="Gender"
+        formControlName="Gender"
+        optionValue="value"
+        optionLabel="value"
+        [showClear]="true"
+        placeholder="Select a Gender"
+      ></p-dropdown>
+      <small
+        class="p-error block"
+        *ngIf="
+          addForm.controls['Gender'].invalid && addForm.controls['Gender'].dirty
+        "
+        >Gender is required</small
+      >
+    </div>
+
+    <!-- <div class="field">
+      <label class="block" for="Gender">Gender</label>
+      <input type="text" pInputText id="Gender" formControlName="Gender" />
+      <small
+        class="p-error block"
+        *ngIf="
+          addForm.controls['Gender'].invalid && addForm.controls['Gender'].dirty
+        "
+        >Gender is required</small
+      >
+    </div> -->
+
+    <div class="field">
+      <label class="block" for="Class">Class</label>
+      <p-inputNumber
+        inputId="integeronly"
+        id="Class"
+        formControlName="Class"
+        class="block"
+        
+        [showButtons]="true"
+        inputId="minmax-buttons"
+        [min]="1"
+        [max]="10"
+      ></p-inputNumber>
+      <small
+        class="p-error block"
+        *ngIf="
+          addForm.controls['Class'].invalid && addForm.controls['Class'].dirty
+        "
+        >Class is required</small
+      >
+    </div>
+
+    <div class="field">
+      <label class="block" for="DOB">DOB</label>
+      <p-calendar
+        appendTo="body"
+        [showIcon]="true"
+        dataType="string"
+        dateFormat="mm-dd-yy"
+        id="DOB"
+        formControlName="DOB"
+      ></p-calendar>
+
+      <small
+        class="p-error block"
+        *ngIf="addForm.controls['DOB'].invalid && addForm.controls['DOB'].dirty"
+        >Date of Birth is required</small
+      >
+    </div>
+
+    <div class="field">
+      <label class="block" for="Pincode">Pincode</label>
+      <p-inputNumber
+        inputId="integeronly"
+        id="Pincode"
+        formControlName="Pincode"
+        class="block"
+      ></p-inputNumber>
+      <small
+        class="p-error block"
+        *ngIf="
+          addForm.controls['Pincode'].invalid &&
+          addForm.controls['Pincode'].dirty
+        "
+        >Pincode is required</small
+      >
+    </div>
+
+    <div class="field">
+      <label class="block" for="Maths">Maths</label>
+      <p-inputNumber
+        id="Maths"
+        formControlName="Maths"
+        class="block"
+        [showButtons]="true"
+        inputId="minmax-buttons"
+        [min]="1"
+        [max]="100"
+      ></p-inputNumber>
+      <small
+        class="p-error block"
+        *ngIf="
+          addForm.controls['Maths'].invalid && addForm.controls['Maths'].dirty
+        "
+        >Marks is required</small
+      >
+    </div>
+    <div class="field">
+      <label class="block" for="Science">Science</label>
+      <p-inputNumber
+        inputId="integeronly"
+        id="Science"
+        formControlName="Science"
+        class="block"
+        [showButtons]="true"
+        inputId="minmax-buttons"
+        [min]="1"
+        [max]="100"
+      ></p-inputNumber>
+      <small
+        class="p-error block"
+        *ngIf="
+          addForm.controls['Science'].invalid &&
+          addForm.controls['Science'].dirty
+        "
+        >Marks is required</small
+      >
+    </div>
+    <div class="field">
+      <label class="block" for="English">English</label>
+      <p-inputNumber
+        inputId="integeronly"
+        id="English"
+        formControlName="English"
+        class="block"
+        [showButtons]="true"
+        inputId="minmax-buttons"
+        [min]="1"
+        [max]="100"
+      ></p-inputNumber>
+      <small
+        class="p-error block"
+        *ngIf="
+          addForm.controls['English'].invalid &&
+          addForm.controls['English'].dirty
+        "
+        >Marks is required</small
+      >
+    </div>
+
+    <div class="field">
+      <label class="block" for="Geography">Geography</label>
+      <p-inputNumber
+        inputId="integeronly"
+        id="Geography"
+        formControlName="Geography"
+        class="block"
+        [showButtons]="true"
+        inputId="minmax-buttons"
+        [min]="1"
+        [max]="100"
+      ></p-inputNumber>
+      <small
+        class="p-error block"
+        *ngIf="
+          addForm.controls['Geography'].invalid &&
+          addForm.controls['Geography'].dirty
+        "
+        >Marks is required</small
+      >
+    </div>
+  </form>
+
+  <p></p>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-times"
+      (click)="closeModal()"
+      label="Close"
+      styleClass="p-button-text"
+    ></p-button>
+    <p-button
+      icon="pi pi-check"
+      (click)="addEditStud()"
+      label="Save"
+      styleClass="p-button-text"
+      [disabled]="addForm.invalid"
+    ></p-button>
+  </ng-template>
+</p-dialog>

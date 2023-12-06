@@ -1,0 +1,14 @@
+h1{
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 2% 0% 0%;
+    font-size:300%;
+    font-weight:300;
+   
+}
+footer {
+    text-align: center;
+    padding-top: 1%;
+    color: #dbedf3;
+    font-family: sans-serif;
+  }
